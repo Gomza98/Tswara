@@ -1,0 +1,2036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tswara Konnect - Rent & Lend Locally</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(135deg, #00b894 0%, #00a085 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-menu a:hover {
+            opacity: 0.8;
+        }
+
+        .nav-active {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .location-display {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            padding: 0.6rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: #ff6b6b;
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-success {
+            background-color: #00b894;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #00b894 0%, #00a085 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .search-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .search-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+        }
+
+        .search-tab {
+            flex: 1;
+            padding: 1rem;
+            background: #f8f9fa;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .search-tab.active {
+            background: #00b894;
+            color: white;
+        }
+
+        .search-tab:first-child {
+            border-radius: 10px 0 0 10px;
+        }
+
+        .search-tab:last-child {
+            border-radius: 0 10px 10px 0;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            flex: 2;
+            padding: 1rem;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: #00b894;
+        }
+
+        .location-input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .search-btn:hover {
+            background: #ff5252;
+        }
+
+        /* Categories Section */
+        .categories {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .categories-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .category-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .category-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-count {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Items Grid */
+        .items-section {
+            padding: 4rem 0;
+        }
+
+        .items-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .filters-bar {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .filters-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-group label {
+            font-weight: 500;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .filter-select {
+            padding: 0.75rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            background: white;
+            min-width: 150px;
+        }
+
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .item-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .item-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .item-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #999;
+        }
+
+        .item-content {
+            padding: 1.5rem;
+        }
+
+        .item-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .item-description {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .item-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .item-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #00b894;
+        }
+
+        .item-location {
+            color: #666;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .item-owner {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .owner-avatar {
+            width: 35px;
+            height: 35px;
+            background: #00b894;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .owner-info {
+            flex: 1;
+        }
+
+        .owner-name {
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .owner-rating {
+            color: #ffd700;
+            font-size: 0.8rem;
+        }
+
+        .item-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: #f1f3f4;
+            color: #666;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 2% auto;
+            padding: 0;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-header {
+            padding: 2rem;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .close {
+            font-size: 2rem;
+            cursor: pointer;
+            color: #666;
+            border: none;
+            background: none;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #00b894;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 0;
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 1rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* How it Works */
+        .how-it-works {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .steps-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .step-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: #00b894;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+        }
+
+        .step-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .step-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #ecf0f1;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid #34495e;
+            color: #bdc3c7;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .search-form {
+                flex-direction: column;
+            }
+
+            .filters-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .form-row {
+                flex-direction: column;
+            }
+
+            .header-actions {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-2 {
+            margin-bottom: 1rem;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border: 1px solid #c3e6cb;
+        }
+
+        .distance-badge {
+            background: #e9ecef;
+            color: #495057;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .availability-badge {
+            background: #d1ecf1;
+            color: #0c5460;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .availability-badge.available {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .availability-badge.unavailable {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="#" class="logo" onclick="showHome()">Tswara Konnect</a>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#" onclick="showHome()" id="nav-home">Home</a></li>
+                    <li><a href="#" onclick="showRent()" id="nav-rent">Rent Items</a></li>
+                    <li><a href="#" onclick="showLend()" id="nav-lend">Lend Items</a></li>
+                    <li><a href="#" onclick="showMyItems()" id="nav-myitems">My Items</a></li>
+                    <li><a href="#" onclick="showAbout()" id="nav-about">How It Works</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <div class="location-display">
+                    <span>📍</span>
+                    <span id="current-location">Johannesburg, SA</span>
+                </div>
+                <a href="#" class="btn btn-secondary" onclick="showLogin()">Login</a>
+                <a href="#" class="btn btn-primary" onclick="showRegister()">Sign Up</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Home Section -->
+        <section id="home-section">
+            <!-- Hero Section -->
+            <div class="hero">
+                <div class="hero-container">
+                    <h1>Rent & Lend Locally</h1>
+                    <p>Connect with your neighbors to rent or lend items within 10km. From tools to electronics, find what you need or earn from what you have.</p>
+                    
+                    <div class="search-section">
+                        <div class="search-tabs">
+                            <button class="search-tab active" onclick="setSearchMode('rent')" id="rent-tab">🔍 Rent Items</button>
+                            <button class="search-tab" onclick="setSearchMode('lend')" id="lend-tab">💰 Lend Items</button>
+                        </div>
+                        
+                        <form class="search-form" onsubmit="performSearch(event)">
+                            <input type="text" class="search-input" placeholder="What are you looking for?" id="search-query">
+                            <input type="text" class="location-input" placeholder="Location" id="search-location" value="Current Location">
+                            <button type="submit" class="search-btn">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories Section -->
+            <section class="categories">
+                <div class="categories-container">
+                    <h2 class="section-title">Popular Categories</h2>
+                    <div class="categories-grid">
+                        <a href="#" class="category-card" onclick="searchByCategory('tools')">
+                            <div class="category-icon">🔧</div>
+                            <div class="category-name">Tools & Equipment</div>
+                            <div class="category-count">245 items available</div>
+                        </a>
+                        <a href="#" class="category-card" onclick="searchByCategory('electronics')">
+                            <div class="category-icon">📱</div>
+                            <div class="category-name">Electronics</div>
+                            <div class="category-count">189 items available</div>
+                        </a>
+                        <a href="#" class="category-card" onclick="searchByCategory('sports')">
+                            <div class="category-icon">⚽</div>
+                            <div class="category-name">Sports & Recreation</div>
+                            <div class="category-count">156 items available</div>
+                        </a>
+                        <a href="#" class="category-card" onclick="searchByCategory('furniture')">
+                            <div class="category-icon">🪑</div>
+                            <div class="category-name">Furniture</div>
+                            <div class="category-count">98 items available</div>
+                        </a>
+                        <a href="#" class="category-card" onclick="searchByCategory('vehicles')">
+                            <div class="category-icon">🚗</div>
+                            <div class="category-name">Vehicles</div>
+                            <div class="category-count">67 items available</div>
+                        </a>
+                        <a href="#" class="category-card" onclick="searchByCategory('appliances')">
+                            <div class="category-icon">🏠</div>
+                            <div class="category-name">Home Appliances</div>
+                            <div class="category-count">134 items available</div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats Section -->
+            <section class="stats">
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <span class="stat-number">2,500+</span>
+                        <span class="stat-label">Items Available</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">1,200+</span>
+                        <span class="stat-label">Active Users</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">850+</span>
+                        <span class="stat-label">Successful Rentals</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">4.8⭐</span>
+                        <span class="stat-label">Average Rating</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- How It Works -->
+            <section class="how-it-works">
+                <div class="steps-container">
+                    <h2 class="section-title">How Tswara Konnect Works</h2>
+                    <div class="steps-grid">
+                        <div class="step-card">
+                            <div class="step-number">1</div>
+                            <h3 class="step-title">Search & Browse</h3>
+                            <p class="step-description">Find items you need within 10km of your location. Browse by category or search for specific items.</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">2</div>
+                            <h3 class="step-title">Connect & Book</h3>
+                            <p class="step-description">Contact item owners directly, agree on rental terms, and book your desired dates.</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">3</div>
+                            <h3 class="step-title">Meet & Rent</h3>
+                            <p class="step-description">Meet safely, inspect the item, complete the transaction, and enjoy your rental!</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">4</div>
+                            <h3 class="step-title">Return & Review</h3>
+                            <p class="step-description">Return the item on time and leave a review to help build trust in the community.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- Rent Items Section -->
+        <section id="rent-section" class="hidden">
+            <div class="items-section">
+                <div class="items-container">
+                    <h2 class="section-title">Available Items Near You</h2>
+                    
+                    <!-- Filters -->
+                    <div class="filters-bar">
+                        <div class="filters-row">
+                            <div class="filter-group">
+                                <label>Category</label>
+                                <select class="filter-select" id="category-filter" onchange="filterItems()">
+                                    <option value="">All Categories</option>
+                                    <option value="tools">Tools & Equipment</option>
+                                    <option value="electronics">Electronics</option>
+                                    <option value="sports">Sports & Recreation</option>
+                                    <option value="furniture">Furniture</option>
+                                    <option value="vehicles">Vehicles</option>
+                                    <option value="appliances">Home Appliances</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label>Price Range</label>
+                                <select class="filter-select" id="price-filter" onchange="filterItems()">
+                                    <option value="">All Prices</option>
+                                    <option value="0-50">R0 - R50/day</option>
+                                    <option value="50-100">R50 - R100/day</option>
+                                    <option value="100-200">R100 - R200/day</option>
+                                    <option value="200+">R200+/day</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label>Distance</label>
+                                <select class="filter-select" id="distance-filter" onchange="filterItems()">
+                                    <option value="">Within 10km</option>
+                                    <option value="2">Within 2km</option>
+                                    <option value="5">Within 5km</option>
+                                    <option value="10">Within 10km</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label>Availability</label>
+                                <select class="filter-select" id="availability-filter" onchange="filterItems()">
+                                    <option value="">All Items</option>
+                                    <option value="available">Available Now</option>
+                                    <option value="upcoming">Available Soon</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Items Grid -->
+                    <div class="items-grid" id="rent-items-grid">
+                        <!-- Items will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lend Items Section -->
+        <section id="lend-section" class="hidden">
+            <div class="items-section">
+                <div class="items-container">
+                    <div style="text-align: center; margin-bottom: 3rem;">
+                        <h2 class="section-title">Start Earning by Lending Your Items</h2>
+                        <p style="font-size: 1.1rem; color: #666; margin-bottom: 2rem;">Turn your unused items into income. List them on Tswara Konnect and connect with people in your area.</p>
+                        <button class="btn btn-success" onclick="showAddItemModal()" style="font-size: 1.1rem; padding: 1rem 2rem;">+ List Your First Item</button>
+                    </div>
+
+                    <div class="steps-grid">
+                        <div class="step-card">
+                            <div class="step-number">📝</div>
+                            <h3 class="step-title">List Your Item</h3>
+                            <p class="step-description">Add photos, description, and set your rental price. Include all important details.</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">👥</div>
+                            <h3 class="step-title">Connect with Renters</h3>
+                            <p class="step-description">Receive requests from nearby users and communicate directly through our platform.</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">💰</div>
+                            <h3 class="step-title">Earn Money</h3>
+                            <p class="step-description">Set your own rates and earn passive income from items you're not using daily.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- My Items Section -->
+        <section id="myitems-section" class="hidden">
+            <div class="items-section">
+                <div class="items-container">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                        <h2 class="section-title" style="margin-bottom: 0;">My Listed Items</h2>
+                        <button class="btn btn-primary" onclick="showAddItemModal()">+ Add New Item</button>
+                    </div>
+
+                    <div class="items-grid" id="my-items-grid">
+                        <!-- User's items will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about-section" class="hidden">
+            <div class="items-section">
+                <div class="items-container">
+                    <h2 class="section-title">About Tswara Konnect</h2>
+                    <div style="background: white; padding: 3rem; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); max-width: 800px; margin: 0 auto;">
+                        <h3 style="color: #00b894; margin-bottom: 1.5rem; font-size: 1.5rem;">Our Mission</h3>
+                        <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
+                            Tswara Konnect is revolutionizing how communities share resources. We believe that many items we own are underutilized, 
+                            and by creating a platform for local sharing, we can reduce waste, save money, and strengthen neighborhood connections.
+                        </p>
+                        
+                        <h3 style="color: #00b894; margin-bottom: 1.5rem; font-size: 1.5rem;">How We Keep You Safe</h3>
+                        <ul style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem; padding-left: 2rem;">
+                            <li>Verified user profiles with photo ID</li>
+                            <li>Community rating and review system</li>
+                            <li>Secure messaging platform</li>
+                            <li>Insurance coverage options</li>
+                            <li>24/7 customer support</li>
+                        </ul>
+                        
+                        <h3 style="color: #00b894; margin-bottom: 1.5rem; font-size: 1.5rem;">Why 10km Radius?</h3>
+                        <p style="font-size: 1.1rem; line-height: 1.8;">
+                            We focus on hyperlocal connections within 10km to ensure convenience, reduce transportation costs, 
+                            and build stronger community relationships. This distance is perfect for most urban and suburban areas, 
+                            allowing for easy meetups and fostering trust between neighbors.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Tswara Konnect</h3>
+                <p>Connecting communities through local rentals. Rent what you need, lend what you have.</p>
+            </div>
+            <div class="footer-section">
+                <h3>For Renters</h3>
+                <ul>
+                    <li><a href="#">Browse Items</a></li>
+                    <li><a href="#">How to Rent</a></li>
+                    <li><a href="#">Safety Guidelines</a></li>
+                    <li><a href="#">Insurance Info</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>For Lenders</h3>
+                <ul>
+                    <li><a href="#">List Your Items</a></li>
+                    <li><a href="#">Pricing Guide</a></li>
+                    <li><a href="#">Lender Protection</a></li>
+                    <li><a href="#">Success Stories</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Community Guidelines</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Tswara Konnect. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Welcome Back</h2>
+                <button class="close" onclick="closeModal('login-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;">Login</button>
+                    <p class="text-center">Don't have an account? <a href="#" onclick="switchToRegister()">Sign up here</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="register-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Join Tswara Konnect</h2>
+                <button class="close" onclick="closeModal('register-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form onsubmit="handleRegister(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" class="form-control" placeholder="City, Province" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        <input type="password" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;">Create Account</button>
+                    <p class="text-center">Already have an account? <a href="#" onclick="switchToLogin()">Login here</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Item Modal -->
+    <div id="add-item-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>List Your Item</h2>
+                <button class="close" onclick="closeModal('add-item-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form onsubmit="handleAddItem(event)">
+                    <div class="form-group">
+                        <label>Item Title</label>
+                        <input type="text" class="form-control" placeholder="e.g., Power Drill, PlayStation 5, Mountain Bike" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select class="form-control" required>
+                            <option value="">Select Category</option>
+                            <option value="tools">Tools & Equipment</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="sports">Sports & Recreation</option>
+                            <option value="furniture">Furniture</option>
+                            <option value="vehicles">Vehicles</option>
+                            <option value="appliances">Home Appliances</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="form-control" placeholder="Describe your item, its condition, and any special instructions..." required></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Daily Rate (R)</label>
+                            <input type="number" class="form-control" placeholder="0" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Security Deposit (R)</label>
+                            <input type="number" class="form-control" placeholder="0" min="0">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Photos</label>
+                        <input type="file" class="form-control" multiple accept="image/*">
+                        <small style="color: #666;">Upload up to 5 photos of your item</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Availability</label>
+                        <select class="form-control" required>
+                            <option value="available">Available immediately</option>
+                            <option value="upcoming">Available from specific date</option>
+                            <option value="weekends">Weekends only</option>
+                            <option value="flexible">Flexible schedule</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Additional Notes</label>
+                        <textarea class="form-control" placeholder="Any special requirements, pickup instructions, etc..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success" style="width: 100%;">List My Item</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Item Detail Modal -->
+    <div id="item-detail-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="item-detail-title">Item Details</h2>
+                <button class="close" onclick="closeModal('item-detail-modal')">&times;</button>
+            </div>
+            <div class="modal-body" id="item-detail-content">
+                <!-- Item details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Rental Request Modal -->
+    <div id="rental-request-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Request Rental</h2>
+                <button class="close" onclick="closeModal('rental-request-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form onsubmit="handleRentalRequest(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Start Date</label>
+                            <input type="date" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>End Date</label>
+                            <input type="date" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Message to Owner</label>
+                        <textarea class="form-control" placeholder="Introduce yourself and explain how you'll use the item..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Pickup Preference</label>
+                        <select class="form-control" required>
+                            <option value="">Select option</option>
+                            <option value="pickup">I'll pick up the item</option>
+                            <option value="meetup">Meet at agreed location</option>
+                            <option value="delivery">Request delivery (if available)</option>
+                        </select>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                        <strong>Rental Summary:</strong><br>
+                        <span id="rental-summary">Select dates to see pricing</span>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Send Rental Request</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample data
+        const itemsData = [
+            {
+                id: 1,
+                title: "Professional Power Drill Set",
+                description: "Complete power drill set with multiple bits and attachments. Perfect for home improvement projects.",
+                category: "tools",
+                price: 45,
+                deposit: 100,
+                location: "Sandton",
+                distance: 2.3,
+                owner: {
+                    name: "John Mthembu",
+                    rating: 4.8,
+                    avatar: "JM"
+                },
+                availability: "available",
+                tags: ["Power Tools", "DIY", "Construction"],
+                posted: "2 days ago",
+                image: "🔧"
+            },
+            {
+                id: 2,
+                title: "PlayStation 5 Console",
+                description: "Latest PS5 console with 2 controllers and popular games included. Perfect for gaming nights.",
+                category: "electronics",
+                price: 120,
+                deposit: 500,
+                location: "Rosebank",
+                distance: 4.1,
+                owner: {
+                    name: "Sarah Johnson",
+                    rating: 4.9,
+                    avatar: "SJ"
+                },
+                availability: "available",
+                tags: ["Gaming", "Console", "Entertainment"],
+                posted: "1 day ago",
+                image: "🎮"
+            },
+            {
+                id: 3,
+                title: "Mountain Bike - Trek",
+                description: "High-quality mountain bike in excellent condition. Perfect for weekend adventures and trails.",
+                category: "sports",
+                price: 80,
+                deposit: 300,
+                location: "Fourways",
+                distance: 6.7,
+                owner: {
+                    name: "Mike van der Merwe",
+                    rating: 4.7,
+                    avatar: "MV"
+                },
+                availability: "available",
+                tags: ["Cycling", "Mountain Bike", "Outdoor"],
+                posted: "3 days ago",
+                image: "🚴"
+            },
+            {
+                id: 4,
+                title: "DSLR Camera Canon EOS",
+                description: "Professional DSLR camera with multiple lenses. Perfect for events, photography, and videography.",
+                category: "electronics",
+                price: 150,
+                deposit: 800,
+                location: "Melville",
+                distance: 8.2,
+                owner: {
+                    name: "Linda Ntuli",
+                    rating: 5.0,
+                    avatar: "LN"
+                },
+                availability: "upcoming",
+                tags: ["Camera", "Photography", "Professional"],
+                posted: "1 week ago",
+                image: "📷"
+            },
+            {
+                id: 5,
+                title: "Camping Tent - 4 Person",
+                description: "Spacious 4-person camping tent with all accessories. Great for weekend getaways and festivals.",
+                category: "sports",
+                price: 60,
+                deposit: 200,
+                location: "Randburg",
+                distance: 5.5,
+                owner: {
+                    name: "Peter Mokwena",
+                    rating: 4.6,
+                    avatar: "PM"
+                },
+                availability: "available",
+                tags: ["Camping", "Outdoor", "Adventure"],
+                posted: "5 days ago",
+                image: "⛺"
+            },
+            {
+                id: 6,
+                title: "Projector & Screen Setup",
+                description: "Complete projector setup with screen and sound system. Perfect for presentations and movie nights.",
+                category: "electronics",
+                price: 90,
+                deposit: 400,
+                location: "Bryanston",
+                distance: 3.8,
+                owner: {
+                    name: "David Chen",
+                    rating: 4.8,
+                    avatar: "DC"
+                },
+                availability: "available",
+                tags: ["Projector", "Presentation", "Entertainment"],
+                posted: "4 days ago",
+                image: "📽️"
+            }
+        ];
+
+        // User's items (for My Items section)
+        const userItems = [
+            {
+                id: 101,
+                title: "Electric Lawnmower",
+                description: "Eco-friendly electric lawnmower, perfect for small to medium gardens.",
+                category: "tools",
+                price: 35,
+                deposit: 150,
+                status: "active",
+                bookings: 3,
+                earnings: 420,
+                image: "🌱"
+            }
+        ];
+
+        // Current state
+        let currentSection = 'home';
+        let currentSearchMode = 'rent';
+        let filteredItems = itemsData;
+        let selectedItem = null;
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            loadRentItems();
+            loadMyItems();
+            setActiveNav('nav-home');
+        });
+
+        // Navigation functions
+        function showHome() {
+            hideAllSections();
+            document.getElementById('home-section').classList.remove('hidden');
+            setActiveNav('nav-home');
+            currentSection = 'home';
+        }
+
+        function showRent() {
+            hideAllSections();
+            document.getElementById('rent-section').classList.remove('hidden');
+            setActiveNav('nav-rent');
+            currentSection = 'rent';
+            loadRentItems();
+        }
+
+        function showLend() {
+            hideAllSections();
+            document.getElementById('lend-section').classList.remove('hidden');
+            setActiveNav('nav-lend');
+            currentSection = 'lend';
+        }
+
+        function showMyItems() {
+            hideAllSections();
+            document.getElementById('myitems-section').classList.remove('hidden');
+            setActiveNav('nav-myitems');
+            currentSection = 'myitems';
+            loadMyItems();
+        }
+
+        function showAbout() {
+            hideAllSections();
+            document.getElementById('about-section').classList.remove('hidden');
+            setActiveNav('nav-about');
+            currentSection = 'about';
+        }
+
+        function hideAllSections() {
+            const sections = ['home-section', 'rent-section', 'lend-section', 'myitems-section', 'about-section'];
+            sections.forEach(section => {
+                document.getElementById(section).classList.add('hidden');
+            });
+        }
+
+        function setActiveNav(activeId) {
+            const navItems = ['nav-home', 'nav-rent', 'nav-lend', 'nav-myitems', 'nav-about'];
+            navItems.forEach(item => {
+                document.getElementById(item).classList.remove('nav-active');
+            });
+            document.getElementById(activeId).classList.add('nav-active');
+        }
+
+        // Search functionality
+        function setSearchMode(mode) {
+            currentSearchMode = mode;
+            const rentTab = document.getElementById('rent-tab');
+            const lendTab = document.getElementById('lend-tab');
+            
+            if (mode === 'rent') {
+                rentTab.classList.add('active');
+                lendTab.classList.remove('active');
+                document.querySelector('.search-input').placeholder = "What are you looking for?";
+            } else {
+                lendTab.classList.add('active');
+                rentTab.classList.remove('active');
+                document.querySelector('.search-input').placeholder = "What do you want to lend?";
+            }
+        }
+
+        function performSearch(event) {
+            event.preventDefault();
+            const query = document.getElementById('search-query').value;
+            const location = document.getElementById('search-location').value;
+            
+            if (currentSearchMode === 'rent') {
+                showRent();
+                if (query) {
+                    filterItemsBySearch(query);
+                }
+            } else {
+                showLend();
+            }
+        }
+
+        function searchByCategory(category) {
+            showRent();
+            document.getElementById('category-filter').value = category;
+            filterItems();
+        }
+
+        function filterItemsBySearch(query) {
+            const searchTerm = query.toLowerCase();
+            filteredItems = itemsData.filter(item => 
+                item.title.toLowerCase().includes(searchTerm) ||
+                item.description.toLowerCase().includes(searchTerm) ||
+                item.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+            );
+            renderItems(filteredItems, 'rent-items-grid');
+        }
+
+        function filterItems() {
+            const categoryFilter = document.getElementById('category-filter').value;
+            const priceFilter = document.getElementById('price-filter').value;
+            const distanceFilter = document.getElementById('distance-filter').value;
+            const availabilityFilter = document.getElementById('availability-filter').value;
+
+            filteredItems = itemsData.filter(item => {
+                // Category filter
+                if (categoryFilter && item.category !== categoryFilter) return false;
+                
+                // Price filter
+                if (priceFilter) {
+                    const [min, max] = priceFilter.split('-').map(Number);
+                    if (max) {
+                        if (item.price < min || item.price > max) return false;
+                    } else {
+                        if (item.price < min) return false;
+                    }
+                }
+                
+                // Distance filter
+                if (distanceFilter && item.distance > parseInt(distanceFilter)) return false;
+                
+                // Availability filter
+                if (availabilityFilter && item.availability !== availabilityFilter) return false;
+                
+                return true;
+            });
+
+            renderItems(filteredItems, 'rent-items-grid');
+        }
+
+        // Item rendering functions
+        function loadRentItems() {
+            renderItems(itemsData, 'rent-items-grid');
+        }
+
+        function loadMyItems() {
+            renderUserItems(userItems, 'my-items-grid');
+        }
+
+        function renderItems(items, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            container.innerHTML = items.map(item => `
+                <div class="item-card" onclick="showItemDetail(${item.id})">
+                    <div class="item-image">${item.image}</div>
+                    <div class="item-content">
+                        <h3 class="item-title">${item.title}</h3>
+                        <p class="item-description">${item.description}</p>
+                        
+                        <div class="item-owner">
+                            <div class="owner-avatar">${item.owner.avatar}</div>
+                            <div class="owner-info">
+                                <div class="owner-name">${item.owner.name}</div>
+                                <div class="owner-rating">${'⭐'.repeat(Math.floor(item.owner.rating))} ${item.owner.rating}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="item-meta">
+                            <div class="item-price">R${item.price}/day</div>
+                            <div class="item-location">📍 ${item.location} (${item.distance}km)</div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <span class="distance-badge">${item.distance}km away</span>
+                            <span class="availability-badge ${item.availability}">${item.availability === 'available' ? '✅ Available' : '🕒 Available Soon'}</span>
+                        </div>
+                        
+                        <div class="item-tags">
+                            ${item.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderUserItems(items, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            if (items.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: #666;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">📦</div>
+                        <h3>No items listed yet</h3>
+                        <p>Start earning by listing your first item!</p>
+                        <button class="btn btn-primary" onclick="showAddItemModal()" style="margin-top: 1rem;">List Your First Item</button>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = items.map(item => `
+                <div class="item-card">
+                    <div class="item-image">${item.image}</div>
+                    <div class="item-content">
+                        <h3 class="item-title">${item.title}</h3>
+                        <p class="item-description">${item.description}</p>
+                        
+                        <div class="item-meta">
+                            <div class="item-price">R${item.price}/day</div>
+                            <div style="color: #666; font-size: 0.9rem;">Status: ${item.status}</div>
+                        </div>
+                        
+                        <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span>Total Bookings:</span>
+                                <strong>${item.bookings}</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Total Earnings:</span>
+                                <strong style="color: #00b894;">R${item.earnings}</strong>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="btn btn-secondary" style="flex: 1; padding: 0.5rem;">Edit</button>
+                            <button class="btn btn-primary" style="flex: 1; padding: 0.5rem;">View Requests</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Item detail functions
+        function showItemDetail(itemId) {
+            const item = itemsData.find(i => i.id === itemId);
+            if (!item) return;
+
+            selectedItem = item;
+            
+            const content = `
+                <div style="display: flex; gap: 2rem; margin-bottom: 2rem;">
+                    <div style="flex: 1;">
+                        <div style="width: 100%; height: 300px; background: linear-gradient(45deg, #f0f0f0, #e0e0e0); display: flex; align-items: center; justify-content: center; font-size: 4rem; border-radius: 10px; margin-bottom: 1rem;">
+                            ${item.image}
+                        </div>
+                        <div class="item-tags">
+                            ${item.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div style="flex: 1;">
+                        <h3 style="margin-bottom: 1rem; color: #333;">${item.title}</h3>
+                        <p style="color: #666; margin-bottom: 1.5rem; line-height: 1.6;">${item.description}</p>
+                        
+                        <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                                <span>Daily Rate:</span>
+                                <strong style="color: #00b894; font-size: 1.2rem;">R${item.price}/day</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                                <span>Security Deposit:</span>
+                                <strong>R${item.deposit}</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Location:</span>
+                                <strong>${item.location} (${item.distance}km away)</strong>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
+                            <div class="owner-avatar">${item.owner.avatar}</div>
+                            <div>
+                                <div style="font-weight: 500;">${item.owner.name}</div>
+                                <div style="color: #ffd700; font-size: 0.9rem;">${'⭐'.repeat(Math.floor(item.owner.rating))} ${item.owner.rating} rating</div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary" onclick="showRentalRequest()" style="width: 100%; padding: 1rem; font-size: 1.1rem;">Request Rental</button>
+                    </div>
+                </div>
+                
+                <div style="border-top: 1px solid #e9ecef; padding-top: 1.5rem;">
+                    <h4 style="margin-bottom: 1rem;">Additional Information</h4>
+                    <ul style="color: #666; line-height: 1.8;">
+                        <li>Item posted ${item.posted}</li>
+                        <li>Available for ${item.availability === 'available' ? 'immediate rental' : 'future bookings'}</li>
+                        <li>Owner typically responds within 2 hours</li>
+                        <li>Pickup/delivery options available</li>
+                    </ul>
+                </div>
+            `;
+            
+            document.getElementById('item-detail-content').innerHTML = content;
+            document.getElementById('item-detail-title').textContent = item.title;
+            showModal('item-detail-modal');
+        }
+
+        function showRentalRequest() {
+            closeModal('item-detail-modal');
+            showModal('rental-request-modal');
+        }
+
+        // Modal functions
+        function showModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function showLogin() {
+            showModal('login-modal');
+        }
+
+        function showRegister() {
+            showModal('register-modal');
+        }
+
+        function showAddItemModal() {
+            showModal('add-item-modal');
+        }
+
+        function switchToRegister() {
+            closeModal('login-modal');
+            showModal('register-modal');
+        }
+
+        function switchToLogin() {
+            closeModal('register-modal');
+            showModal('login-modal');
+        }
+
+        // Form handlers
+        function handleLogin(event) {
+            event.preventDefault();
+            // Simulate login process
+            setTimeout(() => {
+                closeModal('login-modal');
+                showSuccessMessage('Welcome back! You have successfully logged in.');
+                updateHeaderForLoggedInUser();
+            }, 1000);
+        }
+
+        function handleRegister(event) {
+            event.preventDefault();
+            // Simulate registration process
+            setTimeout(() => {
+                closeModal('register-modal');
+                showSuccessMessage('Account created successfully! Welcome to Tswara Konnect.');
+                updateHeaderForLoggedInUser();
+            }, 1000);
+        }
+
+        function handleAddItem(event) {
+            event.preventDefault();
+            // Simulate adding item
+            setTimeout(() => {
+                closeModal('add-item-modal');
+                showSuccessMessage('Your item has been listed successfully! It will be visible to users within 10km of your location.');
+                // Add the new item to user's items
+                const newItem = {
+                    id: userItems.length + 101,
+                    title: event.target.elements[0].value,
+                    description: event.target.elements[2].value,
+                    category: event.target.elements[1].value,
+                    price: parseInt(event.target.elements[3].value),
+                    deposit: parseInt(event.target.elements[4].value) || 0,
+                    status: 'active',
+                    bookings: 0,
+                    earnings: 0,
+                    image: getCategoryIcon(event.target.elements[1].value)
+                };
+                userItems.push(newItem);
+                loadMyItems();
+            }, 1000);
+        }
+
+        function handleRentalRequest(event) {
+            event.preventDefault();
+            // Simulate rental request
+            setTimeout(() => {
+                closeModal('rental-request-modal');
+                showSuccessMessage('Rental request sent successfully! The owner will respond within 24 hours.');
+            }, 1000);
+        }
+
+        function getCategoryIcon(category) {
+            const icons = {
+                'tools': '🔧',
+                'electronics': '📱',
+                'sports': '⚽',
+                'furniture': '🪑',
+                'vehicles': '🚗',
+                'appliances': '🏠'
+            };
+            return icons[category] || '📦';
+        }
+
+        function updateHeaderForLoggedInUser() {
+            const authButtons = document.querySelector('.header-actions');
+            authButtons.innerHTML = `
+                <div class="location-display">
+                    <span>📍</span>
+                    <span id="current-location">Johannesburg, SA</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <span style="color: white;">Welcome, John!</span>
+                    <button class="btn btn-secondary" onclick="showProfile()">Profile</button>
+                    <button class="btn btn-primary" onclick="logout()">Logout</button>
+                </div>
+            `;
+        }
+
+        function showProfile() {
+            alert('Profile functionality would be implemented here');
+        }
+
+        function logout() {
+            location.reload();
+        }
+
+        function showSuccessMessage(message) {
+            const successDiv = document.createElement('div');
+            successDiv.className = 'success-message';
+            successDiv.textContent = message;
+            successDiv.style.position = 'fixed';
+            successDiv.style.top = '100px';
+            successDiv.style.right = '20px';
+            successDiv.style.zIndex = '3000';
+            successDiv.style.maxWidth = '400px';
+            
+            document.body.appendChild(successDiv);
+            
+            setTimeout(() => {
+                successDiv.remove();
+            }, 5000);
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
+        // Date validation for rental requests
+        document.addEventListener('change', function(e) {
+            if (e.target.type === 'date') {
+                const startDate = document.querySelector('input[type="date"]:first-of-type');
+                const endDate = document.querySelector('input[type="date"]:last-of-type');
+                
+                if (startDate && endDate && startDate.value && endDate.value) {
+                    const start = new Date(startDate.value);
+                    const end = new Date(endDate.value);
+                    const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+                    
+                    if (days > 0 && selectedItem) {
+                        const totalCost = days * selectedItem.price;
+                        const deposit = selectedItem.deposit;
+                        document.getElementById('rental-summary').innerHTML = `
+                            <strong>Duration:</strong> ${days} day${days > 1 ? 's' : ''}<br>
+                            <strong>Daily Rate:</strong> R${selectedItem.price}<br>
+                            <strong>Subtotal:</strong> R${totalCost}<br>
+                            <strong>Security Deposit:</strong> R${deposit}<br>
+                            <strong>Total Due:</strong> R${totalCost + deposit}
+                        `;
+                    }
+                }
+            }
+        });
+
+        // Geolocation functionality (simulated)
+        function getCurrentLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        // Simulate location update
+                        document.getElementById('current-location').textContent = 'Your Location';
+                        showSuccessMessage('Location updated! Now showing items within 10km of your location.');
+                        // Refresh items based on new location
+                        loadRentItems();
+                    },
+                    function(error) {
+                        console.log('Location access denied');
+                    }
+                );
+            }
+        }
+
+        // Search suggestions (simulated)
+        function setupSearchSuggestions() {
+            const searchInput = document.getElementById('search-query');
+            const suggestions = [
+                'Power drill', 'Gaming console', 'Mountain bike', 'Camera', 'Projector',
+                'Camping tent', 'Lawn mower', 'Sound system', 'Electric scooter', 'Pressure washer'
+            ];
+            
+            searchInput.addEventListener('input', function() {
+                const value = this.value.toLowerCase();
+                if (value.length > 2) {
+                    const matches = suggestions.filter(s => s.toLowerCase().includes(value));
+                    // Implementation for dropdown suggestions would go here
+                }
+            });
+        }
+
+        // Initialize additional features
+        document.addEventListener('DOMContentLoaded', function() {
+            setupSearchSuggestions();
+            
+            // Set minimum date for rental requests to today
+            const today = new Date().toISOString().split('T')[0];
+            document.querySelectorAll('input[type="date"]').forEach(input => {
+                input.min = today;
+            });
+        });
+
+        // Featured items rotation
+        function rotateFeaturedItems() {
+            const featuredContainer = document.getElementById('featured-jobs');
+            if (featuredContainer) {
+                const featuredItems = itemsData.slice(0, 3);
+                renderItems(featuredItems, 'featured-jobs');
+            }
+        }
+
+        // Initialize featured items on home page
+        setTimeout(() => {
+            rotateFeaturedItems();
+        }, 100);
+
+        // Auto-refresh location every 5 minutes (simulated)
+        setInterval(() => {
+            // Simulate location check
+            console.log('Checking for location updates...');
+        }, 300000);
+
+        // Service worker registration (for PWA functionality)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                // Service worker registration would go here for offline functionality
+                console.log('PWA functionality ready');
+            });
+        }
+
+        // Handle network status
+        window.addEventListener('online', function() {
+            showSuccessMessage('Connection restored! All features are now available.');
+        });
+
+        window.addEventListener('offline', function() {
+            showSuccessMessage('You are offline. Some features may be limited.');
+        });
+
+        // Initialize tooltip functionality
+        function initializeTooltips() {
+            const elements = document.querySelectorAll('[title]');
+            elements.forEach(element => {
+                element.addEventListener('mouseenter', function() {
+                    // Tooltip implementation would go here
+                });
+            });
+        }
+
+        // Chat functionality simulation
+        function initializeChat() {
+            // Real-time messaging system would be implemented here
+            console.log('Chat system initialized');
+        }
+
+        // Rating and review system
+        function submitReview(itemId, rating, comment) {
+            // Review submission logic would go here
+            console.log(`Review submitted for item ${itemId}: ${rating} stars`);
+        }
+
+        // Push notification setup
+        function setupPushNotifications() {
+            // Push notification registration would go here
+            console.log('Push notifications setup complete');
+        }
+
+        // Analytics tracking
+        function trackEvent(eventName, data) {
+            // Analytics tracking would be implemented here
+            console.log(`Event tracked: ${eventName}`, data);
+        }
+
+        // Initialize all additional features
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeTooltips();
+            initializeChat();
+            setupPushNotifications();
+        });
+
+        // Track page views
+        function trackPageView(page) {
+            trackEvent('page_view', { page: page });
+        }
+
+        // Update tracking on navigation
+        const originalShowHome = showHome;
+        showHome = function() {
+            originalShowHome();
+            trackPageView('home');
+        };
+
+        const originalShowRent = showRent;
+        showRent = function() {
+            originalShowRent();
+            trackPageView('rent');
+        };
+
+        const originalShowLend = showLend;
+        showLend = function() {
+            originalShowLend();
+            trackPageView('lend');
+        };
+
+        const originalShowMyItems = showMyItems;
+        showMyItems = function() {
+            originalShowMyItems();
+            trackPageView('my_items');
+        };
+
+        const originalShowAbout = showAbout;
+        showAbout = function() {
+            originalShowAbout();
+            trackPageView('about');
+        };
+    </script>
+</body>
+</html>
